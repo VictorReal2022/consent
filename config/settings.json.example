@@ -1,0 +1,41 @@
+{
+  "db": {
+    "dialect": "mysql",
+    "database": "dbname",
+    "user": "dbuser",
+    "password": "dbpass"
+  },
+  "iopen": {
+    "url": "http://host:port/logout"
+  },
+  "econsent": {
+    "url": "http://host:port"
+  },
+  "email": {
+    "transportSetting": {
+      "host": "host",
+      "port": port,
+      "tls": {
+        "ciphers": "SSLv3"
+      }
+    },
+    "user": "example@mssm.edu"
+  },
+  "erap": {
+    "url": "example.com/api",
+    "token": "token"
+  },
+  "redcap": {
+    "url": "example.com/api",
+    "token": "token"
+  },
+  "docusign": {
+    "dsReturnUrl": "http://localhost:3002/docusigncomplete",
+    "accountId": "xxxxx-xxxxx-xxxxxx-xxxxxx",
+    "baseURI": "https://demo.docusign.net/restapi",
+    "dsOauthServer": "https://account-d.docusign.com",
+    "dsClientId": "xxxxx-xxxxx-xxxxxx-xxxxxx",
+    "privateKeyLocation":  "config/private.key",
+    "impersonatedUserGuid": "xxxxx-xxxxx-xxxxxx-xxxxxx"
+  }
+}

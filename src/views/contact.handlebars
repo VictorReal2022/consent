@@ -1,0 +1,94 @@
+<div class="container mt-5">
+    <div class="mt-2">
+        <h3>{{lang.anyquestionsfaq1}}
+            {{lang.anyquestionsfaq2}}
+            {{lang.anyquestionsfaq3}}
+            {{lang.anyquestionsfaq4}}
+        </h3>
+    </div>
+    <div id="help-item-container" class="row text-center">
+        <div class="col-md-6 col-xs-12">
+            <div id="faq" class="help-item">
+                <i class="far fa-file-alt fa-4x mb-2"></i>
+                <h3>{{lang.seefaq1}}
+                    {{lang.seefaq2}}
+                </h3> <span class="text-secondary mb-2">{{lang.pleaseclickhere}}</span>
+                <span class="help-link text-primary">{{lang.viewfaq}}</span>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div id="contact" class="help-item">
+                <i class="far fa-comment fa-4x mb-2"></i>
+                <h3>{{lang.anyquestionsstudy}}</h3> <span class="text-secondary mb-2">{{lang.pleaseclickhere}}</span>
+                <span class="help-link text-primary">{{lang.contactus}}</span>
+            </div>
+        </div>
+    </div>
+    <div id="contact-form-container" class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-6 pb-5">
+            <form id="contact-form">
+                <div class="card bg-light">
+                    <!--header-->
+                    <div class="card-header">
+                        <div class="text-center py-2">
+                            <h3><i class="fa fa-envelope"></i> {{lang.contactsupport}}</h3>
+                            <p class="m-0">{{lang.anyquestions}}</p>
+                        </div>
+                    </div>
+
+                    <!--body-->
+                    <div class="card-body">
+                        <!--alerts-->
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{lang.contactformsuccess}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{lang.errorsubmit}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fa fa-user"></i></div>
+                                </div>
+                                <input type="text" class="form-control" id="inputName" name="name"
+                                       placeholder="Your name" value="{{#if data.name}}{{data.name}}{{/if}}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fa fa-envelope"></i></div>
+                                </div>
+                                <input type="email" class="form-control" id="inputEmail" name="email"
+                                       placeholder="Your email" value="{{#if data.email}}{{data.email}}{{/if}}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fa fa-comment"></i></div>
+                                </div>
+                                <textarea class="form-control" id="inputMessage" name="message"
+                                          placeholder="Your message" rows="5" required></textarea>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <input type="submit" value="Send" class="btn btn-primary btn-block">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="faq-link" hidden>{{data.faq}}</div>
+</div>
+{{#assetLink 'script'}}
+    <script src="js/contact.bundle.js"></script>
+{{/assetLink}}

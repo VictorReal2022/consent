@@ -1,0 +1,77 @@
+<form class="form-signin" action="/login" method="post">
+    <div class="text-center mb-4">
+        <img id="logo" class="mb-4" src="/img/IcahnLogo.png" alt="" width="300" height="75">
+        <h1 class="h3 mb-3 font-weight-normal">Interactive Online Patient Enrollment Network </h1>
+        <p>iOPEN</p>
+    </div>
+
+    {{#unless data.remote}}
+        <div class="row mb-2">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                Failed to fetch project lists. Please refresh the page and try again.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <label for="inputProject" class="col-5">Please select a project</label>
+            <input type="text" id="inputProject" class="form-control col-7" required>
+            <input type="hidden" id="inputProjectHidden" name="project">
+            <div class="invalid-feedback">
+                Please select a valid project.
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <label for="inputUsername" class="col-5">Username</label>
+            <input type="text" id="inputUsername" class="form-control col-7" name="username" value="{{formData.username}}"
+                   required autofocus>
+        </div>
+        <div class="row mb-2">
+            <label for="inputPassword" class="col-5">Password</label>
+            <input type="password" id="inputPassword" class="form-control col-7" name="password" value="{{formData.password}}"
+                   required>
+        </div>
+        <div id="mrn-input-div" class="row mb-2">
+            <label for="inputMrn" class="col-5">MRN</label>
+            <input type="text" id="inputMrn" class="form-control col-7" name="mrn" value="{{formData.mrn}}">
+        </div>
+        <div id="subject-input-div" class="row mb-2">
+            <label for="inputSubjectId" class="col-5">Subject ID or MRN</label>
+            <input type="text" id="inputSubjectId" class="form-control col-7" name="subject" value="{{formData.subject}}">
+        </div>
+        <div class="checkbox">
+            <label>
+                <input id="erap-checkbox" type="checkbox" name="erap" {{#if formData.erap}}checked{{/if}}> ERAP Compatibility
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input id="epic-checkbox" type="checkbox" name="epic"> EPIC Compatibility
+            </label>
+        </div>
+        <div class="checkbox mb-3">
+            <label>
+                <input id="icore-checkbox" type="checkbox" name="icore"> iCore Compatibility
+            </label>
+        </div>
+    {{/unless}}
+    {{#if data.remote}}
+        <div class="row mb-2">
+            <label for="passcode" class="col-5">Passcode</label>
+            <input type="text" id="passcode" class="form-control col-7" name="passcode" value="{{formData.passcode}}" required
+                   autofocus>
+        </div>
+    {{/if}}
+
+    {{#if message}}
+        <div class="form-text text-danger form-label-group">
+            ERROR: {{ message }}
+        </div>
+    {{/if}}
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Next</button>
+</form>
+
+{{#assetLink 'script'}}
+    <script src="/js/login.bundle.js"></script>
+{{/assetLink}}

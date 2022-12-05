@@ -1,0 +1,52 @@
+<main role="main" class="container">
+<div class="container-fluid mt-4">
+    {{#if data.quiz_content}}
+        {{#if data.options}}
+            <div class="modal-dialog modal-lg">
+                <form class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="quiz-text">{{{data.quiz_content}}}</h3>
+                    </div>
+                    <div class="modal-body quiz-body">
+                        <div class="quiz" data-toggle="buttons">
+                            {{#each data.options}}
+                                <label class="btn btn-lg btn-primary btn-block">
+                                <span class="btn-label">
+                                    <i class="fas fa-chevron-right"></i>
+                                </span>
+                                    <input type="radio" name="q_answer" value={{this.option_id}}> {{this.option_content}}
+                                    <input type="hidden" name="q_correct" value={{this.is_correct}}>
+                                </label>
+                            {{/each}}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {{/if}}
+    {{/if}}
+    <div id="cur-page" hidden>{{data.quiz_num}}</div>
+    <div id="quiz-confirm-1" hidden>{{lang.quizconfirm1}}</div>
+    <div id="quiz-confirm-2" hidden>{{lang.quizconfirm2}}</div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{lang.confirmation}}</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-next-btn"  type="button" class="btn btn-primary">{{lang.yes}}</button>
+                    <button id="modal-cancel-btn" type="button" class="btn btn-secondary">{{lang.no}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{{#assetLink 'script'}}
+    <script src="js/required.bundle.js"></script>
+{{/assetLink}}

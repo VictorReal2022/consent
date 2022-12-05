@@ -1,0 +1,47 @@
+<main role="main" class="container">
+    <div class="mt-5">
+        <table data-toggle="table">
+            <thead>
+            <tr>
+                <th data-checkbox="true" data-formatter="stateFormatter"></th>
+                <th>#</th>
+                <th data-width="50%">{{lang.content}}</th>
+                <th data-width="10%">{{lang.status}}</th>
+                <th data-width="10%">{{lang.from}}</th>
+                <th data-width="20%">{{lang.updatedat}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each data}}
+                <tr>
+                    <td></td>
+                    <td>{{this.id}}</td>
+                    <td>{{this.content}}</td>
+                    <td>{{this.status}}</td>
+                    <td>{{this.username}}</td>
+                    <td>{{this.updated_at}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-5">
+        <button id="read-btn" class="btn btn-lg btn-primary">
+            {{lang.markasread}}
+        </button>
+    </div>
+</main>
+
+{{#assetLink 'script'}}
+    <script src="js/reply.bundle.js"></script>
+    <script>
+    function stateFormatter(value, row) {
+        if (row[3] === 'read') {
+            return {
+                disabled: true,
+            };
+        }
+        return value;
+    }
+    </script>
+{{/assetLink}}

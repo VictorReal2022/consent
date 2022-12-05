@@ -1,0 +1,72 @@
+<main role="main" class="container">
+<div class="container-fluid mt-4">
+    {{#if data.quiz_content}}
+        {{#if data.options}}
+            <div class="modal-dialog">
+                <form class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="quiz-text">{{data.quiz_content}}</h3>
+                    </div>
+                    <div class="modal-body quiz-body">
+                        <div class="quiz" data-toggle="buttons">
+                            {{#each data.options}}
+                                <label class="btn btn-lg btn-primary btn-block">
+                                <span class="btn-label">
+                                    <i class="fas fa-chevron-right"></i>
+                                </span>
+                                    <input type="radio" name="q_answer" value={{this.option_id}}> {{this.option_content}}
+                                    <input type="hidden" name="q_correct" value={{this.is_correct}}>
+                                </label>
+                            {{/each}}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {{/if}}
+    {{/if}}
+
+    {{#if data.medium}}
+        <div class="mt-4">
+            {{#if data.medium.video}}
+                <video class="mx-auto d-block" width="640" height="360" controls>
+                    <source src="project/{{data.medium.medium_path}}" type="video/mp4">
+                    {{lang.browserdoesntsupportvideo}}
+                </video>
+            {{/if}}
+            {{#if data.medium.img}}
+                <div class="d-flex h-100">
+                    <img class="rounded mx-auto d-block" style="max-width:360px;max-height:640px;" src="project/{{data.medium.medium_path}}">
+                </div>
+            {{/if}}
+        </div>
+    {{/if}}
+
+    <div id="cur-page" hidden>{{data.quiz_num}}</div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 id="modal-correct-text" class="modal-title text-success">{{lang.correct}}</h1>
+                    <h1 id="modal-incorrect-text" class="modal-title text-danger">{{lang.wrong}}</h1>
+                </div>
+                <div class="modal-body">
+                    <img id="modal-correct-video" src="project/{{data.interactions.t_video}}" class="rounded mx-auto d-none">
+                    <audio id="modal-correct-audio" src="project/{{data.interactions.t_audio}}" type="audio/mp3"></audio>
+                    <img id="modal-incorrect-video" src="project/{{data.interactions.f_video}}" class="rounded mx-auto d-none">
+                    <audio id="modal-incorrect-audio" src="project/{{data.interactions.f_audio}}" type="audio/mp3"></audio>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-correct-btn" type="button" class="btn btn-primary btn-success">{{lang.continue}}</button>
+                    <button id="modal-incorrect-btn" type="button" class="btn btn-primary btn-danger">{{lang.retry}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{{#assetLink 'script'}}
+    <script src="js/quiz.bundle.js"></script>
+{{/assetLink}}

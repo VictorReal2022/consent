@@ -1,0 +1,116 @@
+const express = require('express');
+const cors = require('cors');
+const exphbs = require('express-handlebars');
+const session = require('express-session');
+const flash = require('express-flash');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const Passport = require('./src/middlewares/passport');
+const msgNotification = require('./src/middlewares/messageNotification');
+
+const app = express();
+const login = require('./src/routes/login');
+const patient = require('./src/routes/patient');
+const protocol = require('./src/routes/protocol');
+const quiz = require('./src/routes/quiz');
+const decision = require('./src/routes/decision');
+const contact = require('./src/routes/contact');
+const reply = require('./src/routes/reply');
+const faq = require('./src/routes/faq');
+const consent = require('./src/routes/consent');
+const survey = require('./src/routes/survey');
+const questionnaire = require('./src/routes/questionnaire');
+const logout = require('./src/routes/logout');
+const error = require('./src/routes/error');
+const docusign = require('./src/routes/docusign');
+const docusigncomplete = require('./src/routes/docusigncomplete');
+const docusignconsent = require('./src/routes/docusignconsent');
+
+/**
+ * Template engine
+ */
+app.use(express.static('dist'));
+app.engine('handlebars', exphbs({
+  layoutsDir: 'src/views/layouts',
+  defaultLayout: 'navbar',
+  helpers: {
+    assetLink(name, options) {
+      if (!this.assetLinks) this.assetLinks = {};
+      this.assetLinks[name] = options.fn(this);
+      return null;
+    },
+    inc(value) {
+      return parseInt(value, 10) + 1;
+    },
+  },
+}));
+app.set('views', 'src/views/');
+app.set('view engine', 'handlebars');
+
+/**
+ * Middlewares
+ */
+app.use(cors());
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+  name: 'e-consent',
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 24,
+  },
+}));
+app.use(Passport.initialize());
+app.use(Passport.session());
+app.use(flash());
+app.use(msgNotification());
+
+/**
+ * Routes
+ */
+app.get('/', (req, res) => {
+  if (req.user) res.redirect('/protocol');
+  else res.redirect('/login');
+});
+app.get('*.ico', () => {});
+app.use('/login', login);
+app.use('/patient', patient);
+app.use('/protocol', protocol);
+app.use('/quiz', quiz);
+app.use('/decision', decision);
+app.use('/contact', contact);
+app.use('/reply', reply);
+app.use('/faq', faq);
+app.use('/consent', consent);
+app.use('/questionnaire', questionnaire);
+app.use('/survey', survey);
+app.use('/logout', logout);
+app.use('/error', error);
+app.use('/docusign', docusign);
+app.use('/docusigncomplete', docusigncomplete);
+app.use('/docusignconsent', docusignconsent);
+app.use('*', (req, res) => {
+  res.redirect('/');
+});
+
+/**
+ * Error handling
+ */
+app.use((err, req, res, next) => {
+  if (err) {
+    console.error(err);
+    res.redirect('/error');
+    return;
+  }
+  next();
+});
+
+/**
+ * Program start
+ */
+app.listen(3002, () => {
+  console.log('Your routes will be running on http://localhost:3002');
+});

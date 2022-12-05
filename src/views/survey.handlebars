@@ -1,0 +1,21 @@
+<main role="main" class="container mt-5">
+    <div>
+        <h4 class="mt-3 pb-3 mb-5">{{lang.agreewithstatements}}</h4>
+        {{#if data.surveys}}
+            {{#each data.surveys}}
+                <div class="row mb-5">
+                    <div class="col-1 ml-3" style="max-width: 40px">{{inc @index}}:</div>
+                    <div class="col-6">{{this.survey_content}}</div>
+                    <div class="col-4 offset-1">
+                        <input class="range-slider" name="range-{{this.survey_id}}" type="text"/>
+                    </div>
+                </div>
+            {{/each}}
+        {{/if}}
+        <button id="submit-btn" class="btn btn-lg btn-primary">{{lang.submit}}</button>
+    </div>
+</main>
+
+{{#assetLink 'script'}}
+    <script src="js/survey.bundle.js"></script>
+{{/assetLink}}

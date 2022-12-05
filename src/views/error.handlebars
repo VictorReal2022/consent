@@ -1,0 +1,28 @@
+<main role="main" class="container">
+    <br>
+    <br>
+    {{#if data.message}}
+        <h1 class="mt-5 mb-5" style="white-space: pre-line">
+            {{{data.message}}}
+        </h1>
+    {{/if}}
+    {{#unless data.message}}
+        <h1 class="mt-5">
+            {{lang.furtherverification}}
+        </h1>
+        <br>
+        <h1 class="mb-5">
+            {{lang.pleasecontactiopenteam}}
+        </h1>
+    {{/unless}}
+    {{#if data.error_message}}
+        <p class="text-danger mb-5">
+            {{lang.error}} {{ data.error_message }}
+        </p>
+    {{/if}}
+    <a href="/logout" class="btn btn-lg btn-secondary">{{lang.backtohome}}</a>
+</main>
+
+{{#assetLink 'script'}}
+    <script src="js/default.bundle.js"></script>
+{{/assetLink}}

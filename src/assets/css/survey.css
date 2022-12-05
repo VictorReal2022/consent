@@ -1,0 +1,17 @@
+#submit-btn {
+  padding: 15px 40px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  font-weight: bold;
+}
+
+.tooltip-main {
+  z-index: 1000 !important;
+}

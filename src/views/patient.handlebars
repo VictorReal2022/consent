@@ -1,0 +1,46 @@
+<form class="form-patient" action="/patient" method="post">
+    <div class="text-center mb-4">
+        <img id="logo" class="mb-4" src="/img/IcahnLogo.png" alt="" width="300" height="75">
+        <h1 class="h3 mb-3 font-weight-normal">Interactive Online Patient Enrollment Network </h1>
+        <p>iOPEN</p>
+    </div>
+
+        <div class="row mb-2">
+            <label for="inputFirst" class="col-5">{{lang.participantfirstname}}</label>
+            <input type="text" id="inputFirst" class="form-control col-7" name="first_name" value="{{formData.first}}"
+                   required autofocus>
+        </div>
+        <div class="row mb-2">
+            <label for="inputLast" class="col-5">{{lang.participantlastname}}</label>
+            <input type="text" id="inputLast" class="form-control col-7" name="last_name" value="{{formData.last}}"
+                   required>
+        </div>
+        <div class="row mb-2">
+            <label for="inputGender" class="col-5">{{lang.gender}}</label>
+            <select class="form-control col-7" id="inputGender" name="gender">
+                <option value="male">{{lang.male}}</option>
+                <option value="female">{{lang.female}}</option>
+                <option value="other">{{lang.other}}</option>
+            </select>
+        </div>
+        <div class="row mb-2">
+            <label for="inputDOB" class="col-5">{{lang.dob}}</label>
+            <input type="date" id="inputDOB" class="form-control col-7" name="dob" value="{{formData.date}}"
+                   required>
+        </div>
+
+    {{#if message}}
+        <div class="form-text text-danger form-label-group">
+            {{lang.error}} {{ message }}
+        </div>
+    {{/if}}
+    <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">{{lang.next}}</button>
+</form>
+
+<form class="form-patient-skip" action="/patient/skip" method="post">
+    <button class="btn btn-lg btn-primary btn-block" type="submit" formaction="/patient/skip">{{lang.skip}}</button>
+</form>
+
+{{#assetLink 'script'}}
+    <script src="/js/patient.bundle.js"></script>
+{{/assetLink}}

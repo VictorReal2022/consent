@@ -1,0 +1,702 @@
+<div class="container">
+    <!--logo-->
+    <div class="py-3 text-center">
+        <img id="logo" class="d-block mx-auto mb-4" src="img/IcahnLogo.png" alt="icahn logo" width="300" height="75">
+        <h2>{{lang.consentformupper}}</h2>
+        <p class="lead"></p>
+    </div>
+
+    <!--form begin-->
+    <div class="col-md-10 offset-md-1">
+        <!--title-->
+        {{#if data.patient}}
+            <h4 class="mb-4">{{lang.personalinformation}}</h4>
+        {{/if}}
+
+        <form class="needs-validation" action="/consent" method="post" novalidate>
+            <!--patient-->
+            {{#if data.patient}}
+                <div id="patient-container" class="mb-4">
+                    <h5>{{lang.participant}}</h5>
+                    <!--name-->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="first-name-input">{{lang.participantfirstname}}</label>
+                            <input type="text" class="form-control" id="first-name-input" name="first_name"
+                                   value="{{#if data.first_name}}{{data.first_name}}{{/if}}" required>
+                            <div class="invalid-feedback">
+                                {{lang.participantvalidfirst}}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="last-name-input">{{lang.participantlastname}}</label>
+                            <input type="text" class="form-control" id="last-name-input" name="last_name"
+                                   value="{{#if data.last_name}}{{data.last_name}}{{/if}}" required>
+                            <div class="invalid-feedback">
+                               {{lang.participantvalidlast}}
+                            </div>
+                        </div>
+                    </div>
+                    <!--signature-->
+                    {{#unless data.echo_11}}
+                    <div id="patient-signature-container">
+                        <label for="patient-signature-data">{{lang.participantsig}}</label>
+                        <div>
+                            <img id="patient-signature-img" class="mb-3" src="" width="300" height="80"/>
+                            <textarea id="patient-signature-data" class="form-control" name="patient_signature_data"
+                                      hidden required></textarea>
+                            <div class="invalid-feedback">
+                                {{lang.participantvalidsig}}
+                            </div>
+                        </div>
+                        <div>
+                            <button id="add-patient-signature-btn" type="button" class="btn btn-primary"
+                                    data-toggle="modal" data-target="#patient-signature-modal">
+                                {{lang.participantaddsig}}
+                            </button>
+                        </div>
+                    </div>
+                    {{/unless}}
+                    <hr/>
+                </div>
+            {{/if}}
+            <!--ra-->
+            {{#if data.ra_modify}}
+                <div id="ra-container" class="mb-4">
+                    <h5>{{lang.personexplaining}}</h5>
+                    <!--ra name-->
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="ra-full-name-input">{{lang.delfullname}}</label>
+                            <input type="text" class="form-control" id="ra-full-name-input" name="ra_full_name"
+                                   value="{{data.ra_modify.full_name}}" required>
+                            <div class="invalid-feedback">
+                                {{lang.delnamereq}}
+                            </div>
+                        </div>
+                    </div>
+                    <!--ra signature-->
+                    <div>
+                        <label for="ra-signature-data">{{lang.delsig}}</label>
+                        <div>
+                            <img id="ra-signature-img" class="mb-3" src="{{data.ra_modify.signature_data}}" width="300"
+                                 height="80"/>
+                            <textarea id="ra-signature-data" class="form-control" name="ra_signature_data"
+                                      hidden required>{{data.ra_modify.signature_data}}</textarea>
+                            <div class="invalid-feedback">
+                                {{lang.delvalid}}
+                            </div>
+                        </div>
+                        <div>
+                            <button id="add-ra-signature-btn" type="button" class="btn btn-primary"
+                                    data-toggle="modal"
+                                    data-target="#ra-signature-modal">
+                                {{lang.delchange}}
+                            </button>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+            {{/if}}
+            <!--email-->
+            {{#if data.email}}
+                <div id="email-container" class="mb-3">
+                    <label for="email-input">{{lang.email}}</label>
+                    <input type="email" class="form-control" id="email-input" name="email"
+                           placeholder="you@example.com">
+                    <div class="invalid-feedback">
+                        {{lang.validemail}}
+                    </div>
+                </div>
+            {{/if}}
+            <!--representative check-->
+            {{#if data.representative}}
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="form-check-input" id="representative-check"
+                           name="representative_check" autocomplete='off'>
+                    <label class="form-check-label" for="representative-check">{{lang.repauthorized1}} 
+                        {{lang.repauthorized2}} <i>{{lang.optional}}</i></label>
+                </div>
+            {{/if}}
+            <!--representative-->
+            {{#if data.representative}}
+                <div id="representative-container" class="mb-4">
+                    <h5>{{lang.signatureforunable}}</h5>
+                    <!--patient name copy-->
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="full-name-input-copy">{{lang.participantfullname}}</label>
+                            <input type="text" class="form-control" id="full-name-input-copy" name="full_name_copy"
+                                   value="" readonly>
+                        </div>
+                    </div>
+                    <!--representative name-->
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="representative-full-name-input">{{lang.repfullname}}</label>
+                            <input type="text" class="form-control" id="representative-full-name-input"
+                                   name="representative_full_name">
+                            <div class="invalid-feedback">
+                                {{lang.repvalidrequired}}
+                            </div>
+                        </div>
+                    </div>
+                    <!--representative signature-->
+                    <div>
+                        <label for="representative-signature-data">{{lang.repsig}}</label>
+                        <div>
+                            <img id="representative-signature-img" class="mb-3" src="" width="300" height="80"/>
+                            <textarea id="representative-signature-data" class="form-control"
+                                      name="representative_signature_data"
+                                      hidden></textarea>
+                            <div class="invalid-feedback">
+                                {{lang.repvalidsig}}
+                            </div>
+                        </div>
+                        <div>
+                            <button id="add-representative-signature-btn" type="button" class="btn btn-primary"
+                                    data-toggle="modal"
+                                    data-target="#representative-signature-modal">
+                                {{lang.repaddsig}}
+                            </button>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+            {{/if}}
+            <!--child check-->
+            {{#if data.child}}
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="form-check-input" id="child-check" name="child_check" autocomplete='off'>
+                    <label class="form-check-label" for="child-check">{{lang.childassent}} <i>{{lang.optional}}</i></label>
+                </div>
+            {{/if}}
+            <!--child-->
+            {{#if data.child}}
+                <div id="child-container" class="mb-4">
+                    <!--child name-->
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="child-full-name-input">{{lang.childfullname}}</label>
+                            <input type="text" class="form-control" id="child-full-name-input" name="child_full_name">
+                            <div class="invalid-feedback">
+                                {{lang.childnamereq}}
+                            </div>
+                        </div>
+                    </div>
+                    <!--child signature-->
+                    <div>
+                        <label for="child-signature-data">{{lang.childsig}}</label>
+                        <div>
+                            <img id="child-signature-img" class="mb-3" src="" width="300" height="80"/>
+                            <textarea id="child-signature-data" class="form-control" name="child_signature_data"
+                                      hidden></textarea>
+                            <div class="invalid-feedback">
+                                {{lang.childvalidreq}}
+                            </div>
+                        </div>
+                        <div>
+                            <button id="add-child-signature-btn" type="button" class="btn btn-primary"
+                                    data-toggle="modal"
+                                    data-target="#child-signature-modal">
+                                {{lang.childaddsig}}
+                            </button>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+            {{/if}}
+            <!--parent1 check-->
+            {{#if data.parent1}}
+                {{#unless data.child}}
+                    <div class="custom-control custom-checkbox mb-3">
+                        <input type="checkbox" class="form-check-input" id="parent1-check"
+                               name="parent1_check" autocomplete='off'>
+                        <label class="form-check-label" for="parent1-check">{{lang.parentauthorized1}} 
+                            {{lang.parentauthorized2}} <i>{{lang.optional}}</i></label>
+                    </div>
+                {{/unless}}
+            {{/if}}
+            <!--parent1-->
+            {{#if data.parent1}}
+                <div id="parent1-container" class="mb-4">
+                    <h5>{{lang.parentsection}}</h5>
+                    <!--patient name copy-->
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="full-name-input-copy1">{{lang.participantfullname}}</label>
+                            <input type="text" class="form-control" id="full-name-input-copy1" name="full_name_copy1"
+                                   value="" readonly>
+                        </div>
+                    </div>
+                    <!--parent1 name-->
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="parent1-full-name-input">{{lang.parentfullname}}</label>
+                            <input type="text" class="form-control" id="parent1-full-name-input"
+                                   name="parent1_full_name">
+                            <div class="invalid-feedback">
+                                {{lang.parentrequired}}
+                            </div>
+                        </div>
+                    </div>
+                    {{#if data.relationship_to_child}}
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="relationship_to_child">{{lang.relationshiptochild}}</label>
+                                <input type="text" class="form-control" id="relationship-to-child-input" name="relationship_to_child">
+                                <div class="invalid-feedback">
+                                    {{lang.relationshiprequired}}
+                                </div>
+                            </div>
+                        </div>
+                    {{/if}}
+                    <!--parent1 signature-->
+                    <div>
+                        <label for="parent1-signature-data">{{lang.parentsig}}</label>
+                        <div>
+                            <img id="parent1-signature-img" class="mb-3" src="" width="300" height="80"/>
+                            <textarea id="parent1-signature-data" class="form-control" name="parent1_signature_data"
+                                      hidden></textarea>
+                            <div class="invalid-feedback">
+                                {{lang.parentvalidsig}}
+                            </div>
+                        </div>
+                        <div>
+                            <button id="add-parent1-signature-btn" type="button" class="btn btn-primary"
+                                    data-toggle="modal"
+                                    data-target="#parent1-signature-modal">
+                                {{lang.parentaddsig}}
+                            </button>
+                        </div>
+                    </div>
+                    <hr id="parent1-hr"/>
+                </div>
+            {{/if}}
+            <!--parent1 declined check-->
+            {{#if data.parent1_decline}}
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="form-check-input" id="parent1-decline-check"
+                           name="parent1_decline_check" autocomplete='off'>
+                    <label class="form-check-label" for="parent1-decline-check">{{lang.pleaseusethisbox}} <strong>{{lang.only}}</strong>
+                        {{lang.parentdeclined}}</label>
+                </div>
+            {{/if}}
+            <!--parent1 declined-->
+            {{#if data.parent1_decline}}
+                <div id="parent1-decline-container" class="mb-4">
+                    <h5>{{lang.parentsection}}</h5>
+                    <!--parent1 name-->
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="parent1-decline-full-name-input">{{lang.parentfullname}}</label>
+                            <input type="text" class="form-control" id="parent1-decline-full-name-input"
+                                   name="parent1_full_name">
+                            <div class="invalid-feedback">
+                               {{lang.parentrequired}}
+                            </div>
+                        </div>
+                    </div>
+                    <!--parent1 signature-->
+                    <div>
+                        <label for="parent1-decline-signature-data">{{lang.parentsig}}</label>
+                        <div>
+                            <img id="parent1-decline-signature-img" class="mb-3" src="" width="300" height="80"/>
+                            <textarea id="parent1-decline-signature-data" class="form-control" name="parent1_signature_data"
+                                      hidden></textarea>
+                            <div class="invalid-feedback">
+                                {{lang.parentvalidsig}}
+                            </div>
+                        </div>
+                        <div>
+                            <button id="add-parent1-decline-signature-btn" type="button" class="btn btn-primary"
+                                    data-toggle="modal"
+                                    data-target="#parent1-decline-signature-modal">
+                                {{lang.parentaddsig}}
+                            </button>
+                        </div>
+                    </div>
+                    <hr id="parent1-decline-hr"/>
+                </div>
+            {{/if}}
+            <!--parent2 check-->
+            {{#if data.parent2}}
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="form-check-input" id="parent2-check"
+                           name="parent2_check" autocomplete='off' disabled>
+                    <label class="form-check-label" for="parent2-check">{{lang.secondparentrequired1}} 
+                        {{lang.secondparentrequired2}} <i>{{lang.optional}}</i></label>
+                </div>
+            {{/if}}
+            <!--parent2-->
+            {{#if data.parent2}}
+                <div id="parent2-container" class="mb-4">
+                    <!--parent2 name-->
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="parent2-full-name-input">{{lang.secondparentfullname}}</label>
+                            <input type="text" class="form-control" id="parent2-full-name-input"
+                                   name="parent2_full_name">
+                            <div class="invalid-feedback">
+                                {{lang.parentrequired}}
+                            </div>
+                        </div>
+                    </div>
+                    <!--parent2 signature-->
+                    <div>
+                        <label for="parent2-signature-data">{{lang.sigsecondparent}}</label>
+                        <div>
+                            <img id="parent2-signature-img" class="mb-3" src="" width="300" height="80"/>
+                            <textarea id="parent2-signature-data" class="form-control" name="parent2_signature_data"
+                                      hidden></textarea>
+                            <div class="invalid-feedback">
+                                {{lang.parentvalidsig}}
+                            </div>
+                        </div>
+                        <div>
+                            <button id="add-parent2-signature-btn" type="button" class="btn btn-primary"
+                                    data-toggle="modal"
+                                    data-target="#parent2-signature-modal">
+                                {{lang.parentaddsig}}
+                            </button>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+            {{/if}}
+            <!--witness check-->
+            {{#if data.witness}}
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="form-check-input" id="witness-check" name="witness_check"
+                           autocomplete='off'>
+                    <label class="form-check-label" for="witness-check">{{lang.witnessrequired1}} 
+                        {{lang.witnessrequired2}} <i>{{lang.optional}}</i></label>
+                </div>
+            {{/if}}
+            <!--witness-->
+            {{#if data.witness}}
+                <div id="witness-container" class="mb-4">
+                    <h5>{{lang.witnesssection}}</h5>
+                    <!--witness name-->
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="witness-full-name-input">{{lang.witnessfullname}}</label>
+                            <input type="text" class="form-control" id="witness-full-name-input"
+                                   name="witness_full_name">
+                            <div class="invalid-feedback">
+                                {{lang.witnessnamereq}}
+                            </div>
+                        </div>
+                    </div>
+                    <!--witness signature-->
+                    <div>
+                        <label for="witness-signature-data">{{lang.witnesssig}}</label>
+                        <div>
+                            <img id="witness-signature-img" class="mb-3" src="" width="300" height="80"/>
+                            <textarea id="witness-signature-data" class="form-control" name="witness_signature_data"
+                                      hidden></textarea>
+                            <div class="invalid-feedback">
+                                {{lang.witnessvalidsig}}
+                            </div>
+                        </div>
+                        <div>
+                            <button id="add-witness-signature-btn" type="button" class="btn btn-primary"
+                                    data-toggle="modal"
+                                    data-target="#witness-signature-modal">
+                                {{lang.witnessaddsig}}
+                            </button>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+            {{/if}}
+            <!--interpreter check-->
+            {{#if data.interpreter}}
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="form-check-input" id="interpreter-check" name="interpreter_check"
+                           autocomplete='off'>
+                    <label class="form-check-label" for="interpreter-check">{{lang.interpreterreq1}} 
+                    {{lang.interpreterreq2}} <i>{{lang.optional}}</i></label>
+                </div>
+            {{/if}}
+            <!--interpreter-->
+            {{#if data.interpreter}}
+                <div id="interpreter-container" class="mb-4">
+                    <h5>{{lang.interpreter}}</h5>
+                    <!--interpreter name-->
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="interpreter-input">{{lang.interpreterid}}</label>
+                            <input type="text" class="form-control" id="interpreter-input" name="interpreter">
+                            <div class="invalid-feedback">
+                                {{lang.interpretervalidid}}
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+            {{/if}}
+            <!--email download check-->
+            {{#if data.email}}
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="form-check-input" id="email-download-check"
+                           name="email_download_check" autocomplete='off'>
+                    <label class="form-check-label" for="email-download-check">{{lang.downloadconsentemail}} 
+                        <i>{{lang.optional}}</i></label>
+                </div>
+            {{/if}}
+            <!--download check-->
+            {{#if data.download}}
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="form-check-input" id="download-check" name="download_check"
+                           autocomplete='off'>
+                    <label class="form-check-label" for="download-check">{{lang.downloadconsentaftersign}}
+<i>{{lang.optional}}</i></label>
+                </div>
+            {{/if}}
+
+            <!--submit-->
+                <button class="btn btn-primary btn-lg btn-block" type="submit">{{lang.submit}}</button>
+        </form>
+
+        <!--modals-->
+        <!--signature modal-->
+        <div class="modal fade" id="patient-signature-modal" tabindex="-1" role="dialog"
+             aria-labelledby="patient-signature-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="patient-signature-modal-label">{{lang.participantsig}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body d-flex h-100">
+                        <canvas id="patient-signature-modal-canvas" width="750" height="200"></canvas>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="mr-auto">
+                            {{lang.usemouseorfinger}}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="patient-signature-modal-save-btn" type="button" class="btn btn-primary">{{lang.save}}
+                        </button>
+                        <button id="patient-signature-modal-clear-btn" type="button" class="btn btn-secondary">{{lang.clear}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--ra signature modal-->
+        <div class="modal fade" id="ra-signature-modal" tabindex="-1" role="dialog"
+             aria-labelledby="ra-signature-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ra-signature-modal-label">{{lang.delsig}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body d-flex h-100">
+                        <canvas id="ra-signature-modal-canvas" width="750" height="200"></canvas>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="mr-auto">
+                            {{lang.delsigmessage}}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="ra-signature-modal-save-btn" type="button" class="btn btn-primary">{{lang.save}}
+                        </button>
+                        <button id="ra-signature-modal-clear-btn" type="button" class="btn btn-secondary">{{lang.clear}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--witness signature modal-->
+        <div class="modal fade" id="witness-signature-modal" tabindex="-1" role="dialog"
+             aria-labelledby="witness-signature-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="witness-signature-modal-label">{{lang.witsig}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body d-flex h-100">
+                        <canvas id="witness-signature-modal-canvas" width="750" height="200"></canvas>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="mr-auto">
+                            {{lang.witsigmessage}}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="witness-signature-modal-save-btn" type="button" class="btn btn-primary">{{lang.save}}
+                        </button>
+                        <button id="witness-signature-modal-clear-btn" type="button" class="btn btn-secondary">{{lang.clear}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--representative signature modal-->
+        <div class="modal fade" id="representative-signature-modal" tabindex="-1" role="dialog"
+             aria-labelledby="representative-signature-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="representative-signature-modal-label">{{lang.repsig}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body d-flex h-100">
+                        <canvas id="representative-signature-modal-canvas" width="750" height="200"></canvas>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="mr-auto">
+                            {{lang.repsigmessage}}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="representative-signature-modal-save-btn" type="button" class="btn btn-primary">
+                            {{lang.save}}
+                        </button>
+                        <button id="representative-signature-modal-clear-btn" type="button" class="btn btn-secondary">
+                            {{lang.clear}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--parent1 signature modal-->
+        <div class="modal fade" id="parent1-signature-modal" tabindex="-1" role="dialog"
+             aria-labelledby="parent1-signature-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="parent1-signature-modal-label">{{lang.parentsig}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body d-flex h-100">
+                        <canvas id="parent1-signature-modal-canvas" width="750" height="200"></canvas>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="mr-auto">
+                            {{lang.parentsigmessage}}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="parent1-signature-modal-save-btn" type="button" class="btn btn-primary">
+                            {{lang.save}}
+                        </button>
+                        <button id="parent1-signature-modal-clear-btn" type="button" class="btn btn-secondary">
+                            {{lang.clear}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--parent1 decline signature modal-->
+        <div class="modal fade" id="parent1-decline-signature-modal" tabindex="-1" role="dialog"
+             aria-labelledby="parent1-decline-signature-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="parent1-decline-signature-modal-label">{{lang.parentsig}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body d-flex h-100">
+                        <canvas id="parent1-decline-signature-modal-canvas" width="750" height="200"></canvas>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="mr-auto">
+                           {{lang.parentsigmessage}}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="parent1-decline-signature-modal-save-btn" type="button" class="btn btn-primary">
+                            {{lang.save}}
+                        </button>
+                        <button id="parent1-decline-signature-modal-clear-btn" type="button" class="btn btn-secondary">
+                            {{lang.clear}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--parent2 signature modal-->
+        <div class="modal fade" id="parent2-signature-modal" tabindex="-1" role="dialog"
+             aria-labelledby="parent2-signature-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="parent2-signature-modal-label">{{lang.secondparentsig}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body d-flex h-100">
+                        <canvas id="parent2-signature-modal-canvas" width="750" height="200"></canvas>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="mr-auto">
+                           {{lang.secondparentsigmessage}}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="parent2-signature-modal-save-btn" type="button" class="btn btn-primary">
+                            {{lang.save}}
+                        </button>
+                        <button id="parent2-signature-modal-clear-btn" type="button" class="btn btn-secondary">
+                            {{lang.clear}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--child signature modal-->
+        <div class="modal fade" id="child-signature-modal" tabindex="-1" role="dialog"
+             aria-labelledby="child-signature-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="child-signature-modal-label">{{lang.chsig}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body d-flex h-100">
+                        <canvas id="child-signature-modal-canvas" width="750" height="200"></canvas>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="mr-auto">
+                            {{lang.usemouseorfinger}}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="child-signature-modal-save-btn" type="button" class="btn btn-primary">
+                            {{lang.save}}
+                        </button>
+                        <button id="child-signature-modal-clear-btn" type="button" class="btn btn-secondary">
+                            {{lang.clear}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{#assetLink 'script'}}
+    <script src="js/consent.bundle.js"></script>
+{{/assetLink}}

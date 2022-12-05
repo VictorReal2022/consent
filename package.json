@@ -1,0 +1,78 @@
+{
+  "name": "e-consent",
+  "version": "1.0.0",
+  "description": "E-Consenting program for Mount Sinai Health System",
+  "private": true,
+  "scripts": {
+    "start": "node app.js",
+    "test": "node tests/app_test.js",
+    "build": "webpack"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix"
+    ]
+  },
+  "author": "Jiazhen Liu",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2",
+    "@types/uuid": "^8.3.0",
+    "animate.css": "^3.7.2",
+    "async-mkdirp": "^1.2.7",
+    "axios": "^0.19.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.3.1",
+    "bootstrap-slider": "^10.6.2",
+    "bootstrap-table": "^1.15.5",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "docusign-esign": "^5.8.1",
+    "express": "^4.17.1",
+    "express-flash": "^0.0.2",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.0",
+    "holderjs": "^2.9.6",
+    "hummus": "^1.0.108",
+    "jquery": "^3.4.1",
+    "jquery-ui-dist": "^1.12.1",
+    "moment": "^2.29.1",
+    "mysql2": "^2.0.1",
+    "node-cron": "^3.0.0",
+    "nodemailer": "^6.3.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "popper.js": "^1.16.0",
+    "qs": "^6.9.1",
+    "sequelize": "^4.44.3",
+    "signature_pad": "^3.0.0-beta.3",
+    "tedious": "^5.0.3",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.0.5",
+    "css-loader": "^3.2.0",
+    "eslint": "^6.7.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-loader": "^3.0.2",
+    "eslint-plugin-import": "^2.18.2",
+    "file-loader": "^5.0.2",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.0",
+    "style-loader": "^1.0.0",
+    "stylelint": "^12.0.0",
+    "stylelint-config-standard": "^19.0.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}

@@ -1,0 +1,27 @@
+<form class="form-patient" action="/epicauth/epic" method="post">
+    <div class="text-center mb-4">
+        <img id="logo" class="mb-4" src="/img/IcahnLogo.png" alt="" width="300" height="75">
+        <h1 class="h3 mb-3 font-weight-normal">Interactive Online Patient Enrollment Network </h1>
+        <p>iOPEN</p>
+    </div>
+
+        <div class="row mb-2">
+            <label for="inputGender" class="col-5">Select a language</label>
+            <select class="form-control col-7" id="inputLanguage" name="inputlanguage">
+                <option value=1>English</option>
+                <option value=3>Spanish</option>
+                <option value=4>Chinese</option>
+            </select>
+        </div>
+
+    {{#if message}}
+        <div class="form-text text-danger form-label-group">
+            {{lang.error}} {{ message }}
+        </div>
+    {{/if}}
+    <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">Next</button>
+</form>
+
+{{#assetLink 'script'}}
+    <script src="/js/patient.bundle.js"></script>
+{{/assetLink}}

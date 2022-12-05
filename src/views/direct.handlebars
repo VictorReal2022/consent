@@ -1,0 +1,53 @@
+<form class="form-patient" action="/direct" method="post">
+    <div class="text-center mb-4">
+        <img id="logo" class="mb-4" src="/img/IcahnLogo.png" alt="" width="300" height="75">
+        <h1 class="h3 mb-3 font-weight-normal">Interactive Online Patient Enrollment Network </h1>
+        <p>iOPEN</p>
+        <p>Please fill in all of the below fields and select 'Next' to continue.</p>
+    </div>
+
+        <div class="row mb-2">
+            <label for="inputFirst" class="col-5">{{lang.participantfirstname}}*</label>
+            <input type="text" id="inputFirst" class="form-control col-7" name="firstName" value="{{formData.firstName}}"
+                   required autofocus>
+        </div>
+        <div class="row mb-2">
+            <label for="inputLast" class="col-5">{{lang.participantlastname}}*</label>
+            <input type="text" id="inputLast" class="form-control col-7" name="lastName" value="{{formData.lastName}}"
+                   required>
+        </div>
+        <div class="row mb-2">
+            <label for="inputGender" class="col-5">{{lang.gender}}*</label>
+            <select class="form-control col-7" id="inputGender" name="gender">
+                <option value="male">{{lang.male}}</option>
+                <option value="female">{{lang.female}}</option>
+                <option value="other">{{lang.other}}</option>
+            </select>
+        </div>
+        <div class="row mb-2">
+            <label for="inputDOB" class="col-5">{{lang.dob}}*</label>
+            <input type="date" id="inputDOB" class="form-control col-7" name="dob" value="{{formData.date}}"
+                   required>
+        </div>
+        <div class="row mb-2">
+            <label for="inputEmail" class="col-5">{{lang.email}}*</label>
+            <input type="email" id="inputEmail" class="form-control col-7" name="email" value="{{formData.email}}"
+                   required>
+        </div>
+        <div class="row mb-2">
+            <label for="inputPhone" class="col-5">{{lang.phone}}*</label>
+            <input type="phone" id="inputPhone" class="form-control col-7" name="phone" value="{{formData.phone}}"
+                   required>
+        </div>
+
+    {{#if message}}
+        <div class="form-text text-danger form-label-group">
+            {{lang.error}} {{ message }}
+        </div>
+    {{/if}}
+    <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">{{lang.next}}</button>
+</form>
+
+{{#assetLink 'script'}}
+    <script src="/js/patient.bundle.js"></script>
+{{/assetLink}}

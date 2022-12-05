@@ -1,0 +1,37 @@
+<main role="main" class="container">
+    <div class="row mt-5 mb-5">
+        {{#unless data.message}}
+            {{#if data.survey}}
+                <h1>{{lang.pleasetakesurvey}}</h1>
+            {{/if}}
+            {{#unless data.survey}}
+                <h1>{{lang.youhaveconsented}}</h1>
+            {{/unless}}
+        {{/unless}}
+        {{#if data.message}}
+            <h2>
+                {{{data.message}}}
+            </h2>
+        {{/if}}
+    </div>
+
+    {{#if data.download}}
+        <div class="row mb-1">
+            <a href="/questionnaire/download" class="btn btn-lg btn-primary">{{lang.downloadconsent}}</a>
+        </div>
+    {{/if}}
+    {{#if data.survey}}
+        <div class="row">
+            <a href="/survey" class="btn btn-lg btn-primary">{{lang.continueequestionnaire}}</a>
+        </div>
+    {{/if}}
+    {{#unless data.survey}}
+        <div class="row">
+            <a href="/logout" class="btn btn-lg btn-primary">{{lang.continue}}</a>
+        </div>
+    {{/unless}}
+</main>
+
+{{#assetLink 'script'}}
+    <script src="js/default.bundle.js"></script>
+{{/assetLink}}

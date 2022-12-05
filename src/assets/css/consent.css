@@ -1,0 +1,8 @@
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+.container {
+  max-width: 960px;
+}

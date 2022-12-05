@@ -1,0 +1,66 @@
+<main role="main" class="container">
+    <h1 class="mt-5">{{data.protocol_title}}</h1>
+    <p id="content">{{{data.protocol_short_content}}}</p>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            {{#if data.medium}}
+                {{#if data.medium.video}}
+                    <video class="mx-auto d-block embed-responsive" controls>
+                        <source src="project/{{data.medium.medium_path}}" type="video/mp4">
+                        {{lang.browserdoesntsupportvideo}}
+                    </video>
+                {{/if}}
+                {{#if data.medium.img}}
+                    <img class="rounded mx-auto d-block img-fluid" src="project/{{data.medium.medium_path}}">
+                {{/if}}
+            {{/if}}
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modalLong" tabindex="-1" role="dialog" aria-labelledby="modalLongTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLongTitle">{{lang.fulltext}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>{{{data.protocol_long_content}}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer mt-5">
+    <div class="container d-flex">
+        <div class="mr-auto">
+            <ul class="pagination pagination-lg">
+                <li class="page-item">
+                    {{#if data.protocol_long_content}}
+                        <a class="page-link text-info" data-toggle="modal" data-target="#modalLong">{{lang.showfulltext}}</a>
+                    {{/if}}
+                </li>
+            </ul>
+        </div>
+        <div>
+            <ul class="pagination pagination-lg">
+                <li id="cur-page" hidden>{{data.protocol_num}}</li>
+                <li class="page-item"><a class="page-link text-secondary" id="prev-btn">{{lang.previous}}</a></li>
+                {{#if data.allow_skip}}
+                <li class="page-item"><a class="page-link text-primary" id="skip-btn">{{lang.skip}}</a></li>
+                {{/if}}
+                <li class="page-item"><a class="page-link text-primary" id="next-btn">{{lang.next}}</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+{{#assetLink 'script'}}
+    <script src="js/protocol.bundle.js"></script>
+{{/assetLink}}
